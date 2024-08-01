@@ -1,0 +1,50 @@
+const Game = require("./Game")
+const Mazo = require("./Deck")
+
+class GameData{
+    constructor(){
+        this.game = new Game()
+        this.gameId = null
+        this.socketId = null
+        this.socketIdUsuarioA = null
+        this.socketIdUsuarioB = null
+    }
+
+    setUsuarioA(usuario){
+        this.game.setJugador1(usuario)
+    }
+    setUsuarioB(usuario){
+        this.game.setJugador2(usuario)
+    }
+    setDeckA(cartas){
+        const nuevoMazo = new Mazo(cartas)
+        this.game.setMazo1(nuevoMazo)
+    }
+    setDeckB(cartas){
+        const nuevoMazo = new Mazo(cartas)
+        this.game.setMazo2(nuevoMazo)
+    }
+    setGameId(gameId){
+        this.gameId = gameId
+    }
+    setSocketId(socketId){
+        this.socketId = socketId
+    }
+    getGameId(){
+        return this.gameId
+    }
+    setSocketIdUsuarioA(socketIdUsuarioA){
+        this.socketIdUsuarioA = socketIdUsuarioA
+    }
+    setSocketIdUsuarioB(socketIdUsuarioB){
+        this.socketIdUsuarioB = socketIdUsuarioB
+    }
+    getSocketIdUsuarioA(){
+        return this.socketIdUsuarioA
+    }
+    getSocketIdUsuarioB(){
+        return this.socketIdUsuarioB
+    }
+}
+
+module.exports = GameData

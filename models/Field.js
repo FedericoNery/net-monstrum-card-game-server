@@ -1,0 +1,167 @@
+const Hand = require('./Hand')
+const Trash = require('./Trash')
+const Deck = require('./Deck')
+const DigimonZone = require('./DigimonZone')
+const { obtenerEnergias, obtenerEnergiasYSumarlas } = require('../services/manoService')
+const CODIGO_TIPO_CARTA = require('../utils/enums').CODIGO_TIPO_CARTA
+
+
+class Field {
+  constructor(deckCards = [], handCards = [], zonaJuego = [], trashCards = []) {
+    this.attackPoints = 0;
+    this.healthPoints = 0;
+    this.hand = new Hand(handCards);
+    this.digimonZone = new DigimonZone(zonaJuego);
+    this.deck = new Deck(deckCards);
+    this.trash = new Trash(trashCards);
+    this.cantidadesEnergias = null
+  }
+
+  setMazo(mazo){
+    this.deck = mazo
+  }
+
+  repartirCartas(cantidad) {
+    const cartasExtraidas = this.deck.extraerCartas(cantidad)
+    this.hand.setCartas(cartasExtraidas)
+  }
+
+  contarEnergias() {
+    if(this.cantidadesEnergias !== null){
+      this.cantidadesEnergias = obtenerEnergiasYSumarlas(this.hand, this.cantidadesEnergias)
+    }
+    else{
+      this.cantidadesEnergias = obtenerEnergias(this.hand)
+    }
+  }
+  getCantidadEnergias() {
+    return this.cantidadesEnergias
+  }
+
+  invocarCartas(listaIdsCartasAInvocar) {
+    const cartasAInvocar = this.hand.getCartasAInvocarFrom(listaIdsCartasAInvocar)
+    this.digimonZone.setCartas(cartasAInvocar)
+    this.hand.quitarCartas(listaIdsCartasAInvocar)
+    this.attackPoints = this.getAtaque()
+    this.healthPoints = this.getDefensa()
+  }
+
+  invocarCartasComputadora() {
+    const mejoresCartasOrdenadas = this.hand.getCartasOrdenadasPorAtaque()
+    if (mejoresCartasOrdenadas.length > 0) {
+      mejoresCartasOrdenadas.map(x => this.invocarCartaComputadora(x))
+    }
+    //Quitar cartas invocadas de la mano de la computadora y setear bien la zona de juego
+  }
+
+  esValidaLaInvocacionDeLaCarta(carta, cantidadesEnergias){
+    const energias = cantidadesEnergias[carta.tipo_energia] //Si o si el tolowercase porque sino no puede acceder a la clave del objeto
+    return carta.cantidad_energia <= energias
+  }
+
+  esValidaLaInvocacionDeLaCartaEnComputadora(carta, cantidadesEnergias){
+    const energias = cantidadesEnergias[carta.tipo_energia.toLowerCase()] //Si o si el tolowercase porque sino no puede acceder a la clave del objeto
+    return carta.cantidad_energia <= energias
+  }
+
+  invocarCartaComputadora(carta) {
+    if (this.esValidaLaInvocacionDeLaCartaEnComputadora(carta, this.cantidadesEnergias)) {
+      this.digimonZone.invocarCarta(carta)
+      this.quitarEnergiasGastadasPor(carta)
+    }
+  }
+
+  invocarCarta(carta) {
+    if (this.esValidaLaInvocacionDeLaCarta(carta, this.cantidadesEnergias)) {
+      this.digimonZone.invocarCarta(carta)
+      this.quitarEnergiasGastadasPor(carta)
+    }
+  }
+
+  quitarEnergiasGastadasPor(carta) {
+    const tipoEnergia = carta.tipo_energia
+    const energiasARestar = carta.cantidad_energia
+    switch (tipoEnergia) {
+      case CODIGO_TIPO_CARTA.AGUA:
+        this.cantidadesEnergias.agua -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.DRAGON:
+        this.cantidadesEnergias.dragon -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.FAIRY:
+        this.cantidadesEnergias.fairy -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.FUEGO:
+        this.cantidadesEnergias.fuego -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.HIERBA:
+        this.cantidadesEnergias.hierba -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.INCOLORO:
+        this.cantidadesEnergias.incoloro -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.LUCHA:
+        this.cantidadesEnergias.lucha -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.METAL:
+        this.cantidadesEnergias.metal -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.OSCURO:
+        this.cantidadesEnergias.oscuro -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.PSIQUICO:
+        this.cantidadesEnergias.psiquico -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.RAYO:
+        this.cantidadesEnergias.rayo -= energiasARestar
+        break;
+      case CODIGO_TIPO_CARTA.TIERRA:
+        this.cantidadesEnergias.tierra -= energiasARestar
+        break;
+      default:
+        throw "Error con el tipo de energía";
+    }
+  }
+
+  descartarCartasMano(){
+    if(this.hand.getLength() > 0){
+      this.hand.getCartas().map((carta) => this.trash.agregarCarta(carta))
+      this.hand.clear()
+    }
+  }
+
+  descartarCartasCampo(){
+    if(this.digimonZone.getLength() > 0){
+      this.digimonZone.getCartas().map((carta) => this.trash.agregarCarta(carta))
+      this.digimonZone.clear()
+    }
+  }
+
+  getAtaque(){
+    return this.digimonZone.getAtaque()
+  }
+  getDefensa(){
+    return this.digimonZone.getDefensa()
+  }
+
+  getMano(){
+    return this.hand
+  }
+  getMazo(){
+    return this.deck
+  }
+  getZonaJuego(){
+    return this.digimonZone
+  }
+
+  atacar(campoRival){
+    const ataque = this.getAtaque()
+    campoRival.defender(ataque)
+  }
+
+  defender(dañoRecibido){
+    this.healthPoints -= dañoRecibido
+  }
+}
+
+module.exports = Field
