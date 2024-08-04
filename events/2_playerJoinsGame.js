@@ -25,8 +25,8 @@ function playerJoinsGame({gameIdToJoin, user, deck}, io, gamesData, gameSocket) 
         // Guardar información del usuario y el mazo a utilizar que hizo join de la sesión
         var gamesIdsList = gamesData.map(x => x.getGameId())
         var indexGame = gamesIdsList.indexOf(gameIdToJoin)
-        gamesData[indexGame].set_usuario_b(user)
-        gamesData[indexGame].set_mazo_b(deck)
+        gamesData[indexGame].setUsuarioB(user)
+        gamesData[indexGame].setDeckB(deck)
         gamesData[indexGame].setSocketIdUsuarioB(gameSocket.id)
 
 
@@ -48,9 +48,14 @@ function playerJoinsGame({gameIdToJoin, user, deck}, io, gamesData, gameSocket) 
         
         io.sockets.in(gameDataArray[0].socketIdUsuarioA).emit(EMIT_EVENTS.START_GAME, {gameData: gameDataArray[0]})
         io.sockets.in(gameDataArray[0].socketIdUsuarioB).emit(EMIT_EVENTS.START_GAME, {gameData: gameDataArray[0]}) // Ver que pasarle al evento
+
+        //EMIT START PHASE EVENT -> cambiar estado en cliente 
         startPhase(gameIdToJoin, gamesData, io)
+
+        //EMIT DRAW PHASE EVENT -> pasarle el mazo, la mano, estado de partida
         drawPhase(gameIdToJoin, gamesData, io)
         
+        //EMIT COUNT ENERGIES EVENT -> pasarle las energias calculadas de la mano
         gameDataArray = gamesData.filter(x => x.getGameId() === gameIdToJoin)
         io.sockets.in(gameDataArray[0].socketIdUsuarioA).emit(EMIT_EVENTS.START_GAME, {gameData: gameDataArray[0]})
         io.sockets.in(gameDataArray[0].socketIdUsuarioB).emit(EMIT_EVENTS.START_GAME, {gameData: gameDataArray[0]})
