@@ -46,8 +46,8 @@ function playerJoinsGame({gameIdToJoin, user, deck}, io, gamesData, gameSocket) 
         console.log("ENTRO A JOINS GAME")
         var gameDataArray = gamesData.filter(x => x.getGameId() === gameIdToJoin)
         
-        io.sockets.in(gameDataArray[0].socketIdUsuarioA).emit(EMIT_EVENTS.START_GAME, {gameData: gameDataArray[0]})
-        io.sockets.in(gameDataArray[0].socketIdUsuarioB).emit(EMIT_EVENTS.START_GAME, {gameData: gameDataArray[0]}) // Ver que pasarle al evento
+        io.sockets.in(gameDataArray[0].socketIdUsuarioA).emit(EMIT_EVENTS.START_GAME, JSON.stringify({gameData: gameDataArray[0]}))
+        io.sockets.in(gameDataArray[0].socketIdUsuarioB).emit(EMIT_EVENTS.START_GAME, JSON.stringify({gameData: gameDataArray[0]})) // Ver que pasarle al evento
 
         //EMIT START PHASE EVENT -> cambiar estado en cliente 
         /* startPhase(gameIdToJoin, gamesData, io) */
