@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "nodemon app.js",
+    "debug": "nodemon --inspect-brk app.js",
     "test": "jest"
   },
   "devDependencies": {

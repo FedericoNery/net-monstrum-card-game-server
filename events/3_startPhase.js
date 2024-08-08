@@ -3,7 +3,7 @@ function startPhase(gameId, gamesData, io) {
     //io.sockets.in(gameId)
 
     var gameDataToJoin = gamesData.filter(x => x.getGameId() === gameId)
-    gameDataToJoin[0].juego.startPhase()
+    gameDataToJoin[0].game.startPhase()
 
     //ABAJO ES EL EJEMPLO DE CADA CLIENTE EN PARTICULAR
     /* io.to(data.id).emit(EMIT_EVENTS.SELECCIONAR_CALUMON, move);
