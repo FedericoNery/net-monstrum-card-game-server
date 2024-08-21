@@ -160,6 +160,13 @@ class Game {
         this.iniciarRonda()
     }
 
+    startDrawPhase(){
+        this.estadoDeLaRonda = EstadosDeLaPartida.JUEGO_INICIADO
+        this.shuffleDecks()
+        this.estadoDeLaRonda = EstadosDeLaPartida.RONDA_INICIADA
+        this.repartirCartas()
+    }
+
     drawPhase(){
         this.repartirCartas()
     }

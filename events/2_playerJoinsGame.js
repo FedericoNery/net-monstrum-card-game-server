@@ -1,6 +1,7 @@
 const { EMIT_EVENTS } = require("../utils/events")
 const { drawPhase } = require("./2_drawPhase")
 const { startPhase } = require("./3_startPhase")
+const {startDrawPhase} = require("./3_startDrawPhase")
 
 function playerJoinsGame({gameIdToJoin, user, deck}, io, gamesData, gameSocket) {
     /**
@@ -48,6 +49,26 @@ function playerJoinsGame({gameIdToJoin, user, deck}, io, gamesData, gameSocket) 
         
         io.sockets.in(gameDataArray[0].socketIdUsuarioA).emit(EMIT_EVENTS.START_GAME, JSON.stringify({gameData: gameDataArray[0]}))
         io.sockets.in(gameDataArray[0].socketIdUsuarioB).emit(EMIT_EVENTS.START_GAME, JSON.stringify({gameData: gameDataArray[0]})) // Ver que pasarle al evento
+
+
+        setTimeout(() => {
+            startDrawPhase(gameIdToJoin, gamesData, io) 
+            let array = gamesData.filter(x => x.getGameId() === gameIdToJoin)
+            const gameData = array[0]
+
+            const info = {
+                deck1: gameData.game.field1.deck,
+                hand1: gameData.game.field1.hand,
+                deck2: gameData.game.field2.deck,
+                hand2: gameData.game.field2.hand,
+                energies1: gameData.game.field1.cantidadesEnergias,
+                energies2: gameData.game.field2.cantidadesEnergias,
+
+            }
+
+            io.sockets.in(gameData.socketIdUsuarioA).emit(EMIT_EVENTS.START_DRAW_PHASE, JSON.stringify({gameData: gameData}))
+            io.sockets.in(gameData.socketIdUsuarioB).emit(EMIT_EVENTS.START_DRAW_PHASE, JSON.stringify({gameData: gameData}))
+        }, 3000); 
 
         //EMIT START PHASE EVENT -> cambiar estado en cliente 
         /* startPhase(gameIdToJoin, gamesData, io) */
