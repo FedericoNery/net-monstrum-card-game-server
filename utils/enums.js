@@ -1,23 +1,17 @@
-const CODIGO_CARTAS ={
-    ENERGIA : 'E',
-    POKEMON : 'P',
-    ENTRENADOR: 'ENT',
-    ARENA: 'A'
+const TYPE ={
+    PROGRAMMING : 'Programming',
+    DIGIMON : 'Digimon',
+    ENERGY: 'Energy',
+    EQUIPMENT: 'Equipment'
 }
 
-const CODIGO_TIPO_CARTA ={
-    INCOLORO: 'Incoloro',
-    FUEGO: 'Fuego',
-    TIERRA: 'Tierra',
-    RAYO: 'Rayo',
-    DRAGON: 'Dragon',
-    HIERBA : 'Hierba',
-    AGUA : 'Agua',
-    FAIRY : 'Celestial',
-    OSCURO: 'Oscuro',
-    LUCHA: 'Lucha',
-    PSIQUICO: 'Psiquico',
-    METAL: 'Metal',
+const COLOR ={
+    RED: 'Red',
+    BLUE: 'Blue',
+    BROWN: 'Brown',
+    BLACK: 'Black',
+    GREEN: 'Green',
+    WHITE: 'White',
 }
 
 const RESULTADOS ={
@@ -39,21 +33,11 @@ const FASES_JUEGO = {
     DETERMINAR_GANADOR_PARTIDA : 9,
 }
 
-const NIVEL_EVOLUCION={
-    BASICO: 1,
-    ETAPA_1: 2,
-    ETAPA_2: 3,
-    INICIAL: 1,
-    DEFINITIVO: 2,
-    MEGA: 3,
-}
-
 const Enum = {
-    CODIGO_CARTAS,
-    CODIGO_TIPO_CARTA,
+    TYPE,
+    COLOR,
     RESULTADOS,
     FASES_JUEGO,
-    NIVEL_EVOLUCION
 }
 
 module.exports = Enum

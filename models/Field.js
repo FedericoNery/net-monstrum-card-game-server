@@ -3,7 +3,7 @@ const Trash = require('./Trash')
 const Deck = require('./Deck')
 const DigimonZone = require('./DigimonZone')
 const { obtenerEnergias, obtenerEnergiasYSumarlas } = require('../services/manoService')
-const CODIGO_TIPO_CARTA = require('../utils/enums').CODIGO_TIPO_CARTA
+const {COLOR} = require('../utils/enums')
 
 
 class Field {
@@ -78,45 +78,27 @@ class Field {
     }
   }
 
-  quitarEnergiasGastadasPor(carta) {
-    const tipoEnergia = carta.tipo_energia
-    const energiasARestar = carta.cantidad_energia
-    switch (tipoEnergia) {
-      case CODIGO_TIPO_CARTA.AGUA:
-        this.cantidadesEnergias.agua -= energiasARestar
+  quitarEnergiasGastadasPor(card) {
+    const color = card.color
+    const energiasARestar = card.energyCount
+    switch (color) {
+      case COLOR.RED:
+        this.cantidadesEnergias.red -= energiasARestar
         break;
-      case CODIGO_TIPO_CARTA.DRAGON:
-        this.cantidadesEnergias.dragon -= energiasARestar
+      case COLOR.BLACK:
+        this.cantidadesEnergias.black -= energiasARestar
         break;
-      case CODIGO_TIPO_CARTA.FAIRY:
-        this.cantidadesEnergias.fairy -= energiasARestar
+      case COLOR.BLUE:
+        this.cantidadesEnergias.blue -= energiasARestar
         break;
-      case CODIGO_TIPO_CARTA.FUEGO:
-        this.cantidadesEnergias.fuego -= energiasARestar
+      case COLOR.BROWN:
+        this.cantidadesEnergias.brown -= energiasARestar
         break;
-      case CODIGO_TIPO_CARTA.HIERBA:
-        this.cantidadesEnergias.hierba -= energiasARestar
+      case COLOR.GREEN:
+        this.cantidadesEnergias.green -= energiasARestar
         break;
-      case CODIGO_TIPO_CARTA.INCOLORO:
-        this.cantidadesEnergias.incoloro -= energiasARestar
-        break;
-      case CODIGO_TIPO_CARTA.LUCHA:
-        this.cantidadesEnergias.lucha -= energiasARestar
-        break;
-      case CODIGO_TIPO_CARTA.METAL:
-        this.cantidadesEnergias.metal -= energiasARestar
-        break;
-      case CODIGO_TIPO_CARTA.OSCURO:
-        this.cantidadesEnergias.oscuro -= energiasARestar
-        break;
-      case CODIGO_TIPO_CARTA.PSIQUICO:
-        this.cantidadesEnergias.psiquico -= energiasARestar
-        break;
-      case CODIGO_TIPO_CARTA.RAYO:
-        this.cantidadesEnergias.rayo -= energiasARestar
-        break;
-      case CODIGO_TIPO_CARTA.TIERRA:
-        this.cantidadesEnergias.tierra -= energiasARestar
+      case COLOR.WHITE:
+        this.cantidadesEnergias.white -= energiasARestar
         break;
       default:
         throw "Error con el tipo de energía";

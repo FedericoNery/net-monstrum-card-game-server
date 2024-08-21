@@ -1,52 +1,35 @@
-const CODIGO_TIPO_CARTA = require('../utils/enums').CODIGO_TIPO_CARTA
+const {COLOR} = require('../utils/enums')
 
 const obtenerEnergias = (mano) => {
     return {
-        incoloro: contarEnergias(mano, CODIGO_TIPO_CARTA.INCOLORO),
-        fuego: contarEnergias(mano, CODIGO_TIPO_CARTA.FUEGO),
-        tierra: contarEnergias(mano, CODIGO_TIPO_CARTA.TIERRA),
-        rayo: contarEnergias(mano, CODIGO_TIPO_CARTA.RAYO),
-        dragon: contarEnergias(mano, CODIGO_TIPO_CARTA.DRAGON),
-        hierba: contarEnergias(mano, CODIGO_TIPO_CARTA.HIERBA),
-        agua: contarEnergias(mano, CODIGO_TIPO_CARTA.AGUA),
-        fairy: contarEnergias(mano, CODIGO_TIPO_CARTA.FAIRY),
-        oscuro: contarEnergias(mano, CODIGO_TIPO_CARTA.OSCURO),
-        lucha: contarEnergias(mano, CODIGO_TIPO_CARTA.LUCHA),
-        psiquico: contarEnergias(mano, CODIGO_TIPO_CARTA.PSIQUICO),
-        metal: contarEnergias(mano, CODIGO_TIPO_CARTA.METAL),
+        red: contarEnergias(mano, COLOR.RED), 
+        blue: contarEnergias(mano, COLOR.BLUE),
+        brown: contarEnergias(mano, COLOR.BROWN),
+        black: contarEnergias(mano, COLOR.BLACK),
+        green: contarEnergias(mano, COLOR.GREEN),
+        white: contarEnergias(mano, COLOR.WHITE),
     }
 }
 
 const obtenerEnergiasYSumarlas = (mano, energias) => {
     return {
-        incoloro: contarEnergias(mano, CODIGO_TIPO_CARTA.INCOLORO) + energias.incoloro,
-        fuego: contarEnergias(mano, CODIGO_TIPO_CARTA.FUEGO) + energias.incoloro,
-        tierra: contarEnergias(mano, CODIGO_TIPO_CARTA.TIERRA) + energias.incoloro,
-        rayo: contarEnergias(mano, CODIGO_TIPO_CARTA.RAYO) + energias.incoloro,
-        dragon: contarEnergias(mano, CODIGO_TIPO_CARTA.DRAGON) + energias.incoloro,
-        hierba: contarEnergias(mano, CODIGO_TIPO_CARTA.HIERBA),
-        agua: contarEnergias(mano, CODIGO_TIPO_CARTA.AGUA),
-        fairy: contarEnergias(mano, CODIGO_TIPO_CARTA.FAIRY),
-        oscuro: contarEnergias(mano, CODIGO_TIPO_CARTA.OSCURO),
-        lucha: contarEnergias(mano, CODIGO_TIPO_CARTA.LUCHA),
-        psiquico: contarEnergias(mano, CODIGO_TIPO_CARTA.PSIQUICO),
-        metal: contarEnergias(mano, CODIGO_TIPO_CARTA.METAL),
+        red: contarEnergias(mano, COLOR.RED) + energias.red, 
+        blue: contarEnergias(mano, COLOR.BLUE)+ energias.blue, 
+        brown: contarEnergias(mano, COLOR.BROWN)+ energias.brown, 
+        black: contarEnergias(mano, COLOR.BLACK)+ energias.black, 
+        green: contarEnergias(mano, COLOR.GREEN)+ energias.green, 
+        white: contarEnergias(mano, COLOR.WHITE)+ energias.white, 
     }
 }
 
-const contarEnergias = (mano, tipoCarta) => {
-    if (mano.length === 0)
-        return 0
-
-    return filtroPorCartasPokemon(mano, tipoCarta).length + filtroPorCartasEnergia(mano, tipoCarta).length
+const contarEnergias = (mano, color) => {
+    if (mano.cartas.length > 0)
+        return filtroPorCartasQueTienenColor(mano, color).length
+    return 0
 }
 
-const filtroPorCartasPokemon = (mano, tipoCarta) => {
-    return mano.getCartas().filter(carta => carta.tipo_energia != undefined && carta.tipo_energia === tipoCarta)
-}
-
-const filtroPorCartasEnergia = (mano, tipoCarta) => {
-    return mano.getCartas().filter(carta => carta.energias != undefined && carta.energias.filter(energia => energia.nombre === tipoCarta).length > 0)
+const filtroPorCartasQueTienenColor = (mano, color) => {
+    return mano.cartas.filter(carta => carta.color && carta.color === color)
 }
 
 const esValidaLaInvocacion = (energias, cartasSeleccionadas) => {
@@ -57,44 +40,26 @@ const esValidaLaInvocacion = (energias, cartasSeleccionadas) => {
 
 const quitarEnergiasPorCarta = (energias, cartasSeleccionadas) => {
     var energiasResultantes = energias
-    cartasSeleccionadas.forEach(cartaPokemon => {
-        const energiasAExtraer = cartaPokemon.cantidad_energia
-        switch (cartaPokemon.tipo_energia) {
-            case CODIGO_TIPO_CARTA.AGUA:
-                energiasResultantes.agua -= energiasAExtraer
+    cartasSeleccionadas.forEach(digimonCard => {
+        const energiasAExtraer = digimonCard.energyCount
+        switch (digimonCard.color) {
+            case COLOR.RED:
+                energiasResultantes.red -= energiasAExtraer
                 break;
-            case CODIGO_TIPO_CARTA.DRAGON:
-                energiasResultantes.dragon -= energiasAExtraer
+            case COLOR.BLUE:
+                energiasResultantes.blue -= energiasAExtraer
             break;
-            case CODIGO_TIPO_CARTA.FAIRY:
-                energiasResultantes.fairy -= energiasAExtraer
+            case COLOR.BLACK:
+                energiasResultantes.black -= energiasAExtraer
             break;
-            case CODIGO_TIPO_CARTA.FUEGO:
-                energiasResultantes.fuego -= energiasAExtraer
+            case COLOR.BROWN:
+                energiasResultantes.brown -= energiasAExtraer
             break;
-            case CODIGO_TIPO_CARTA.HIERBA:
-                energiasResultantes.hierba -= energiasAExtraer
+            case COLOR.GREEN:
+                energiasResultantes.green -= energiasAExtraer
             break;
-            case CODIGO_TIPO_CARTA.INCOLORO:
-                energiasResultantes.incoloro -= energiasAExtraer
-            break;
-            case CODIGO_TIPO_CARTA.LUCHA:
-                energiasResultantes.lucha -= energiasAExtraer
-            break;
-            case CODIGO_TIPO_CARTA.METAL:
-                energiasResultantes.metal -= energiasAExtraer
-            break;
-            case CODIGO_TIPO_CARTA.OSCURO:
-                energiasResultantes.oscuro -= energiasAExtraer
-            break;
-            case CODIGO_TIPO_CARTA.PSIQUICO:
-                energiasResultantes.psiquico -= energiasAExtraer
-            break;
-            case CODIGO_TIPO_CARTA.RAYO:
-                energiasResultantes.rayo -= energiasAExtraer
-            break;
-            case CODIGO_TIPO_CARTA.TIERRA:
-                energiasResultantes.tierra -= energiasAExtraer
+            case COLOR.WHITE:
+                energiasResultantes.white -= energiasAExtraer
             break;
             default:
                 throw "Error con el tipo de energía";
