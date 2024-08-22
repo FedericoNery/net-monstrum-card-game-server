@@ -4,4 +4,9 @@ function getIndiceGameData(gameId, gamesData){
     return indexGame
 }
 
-module.exports = { getIndiceGameData }
+function getGameIdBySocketId(socketId, gamesData){
+    const game = gamesData.filter(x => x.socketIdUsuarioA === socketId || x.socketIdUsuarioB === socketId)[0]
+    return game.getGameId()
+}
+
+module.exports = { getIndiceGameData, getGameIdBySocketId }

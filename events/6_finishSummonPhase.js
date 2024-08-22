@@ -5,13 +5,13 @@ const { finishRound } = require("./7_finishRound")
 
 async function finishSummonPhase({gameId, usuarioId, cartasId}, gamesData, io){
     var indexGame = getIndiceGameData(gameId, gamesData)
-    console.log(indexGame)
-    console.log(gamesData[indexGame])
+    /* console.log(indexGame)
+    console.log(gamesData[indexGame]) */
     gamesData[indexGame].game.finishSummonPhase(usuarioId, cartasId)
     var socketIdUsuarioA = gamesData[indexGame].socketIdUsuarioA
     var socketIdUsuarioB = gamesData[indexGame].socketIdUsuarioB
-    console.log(gamesData[indexGame].game.campo1.zonaJuego)
-    console.log(gamesData[indexGame].game.campo2.zonaJuego)
+    /* console.log(gamesData[indexGame].game.campo1.zonaJuego)
+    console.log(gamesData[indexGame].game.campo2.zonaJuego) */
     io.to(socketIdUsuarioA).emit("UPDATE GAME DATA", {gameData: gamesData[indexGame]});
     io.to(socketIdUsuarioB).emit("UPDATE GAME DATA", {gameData: gamesData[indexGame]});
 

@@ -4,7 +4,7 @@ const { startPhase } = require("./3_startPhase");
 
 function finishRound(indexGame, gamesData, io){
     if(gamesData[indexGame].game.finishedRonda()){
-        console.log("FINALIZÓ LA RONDA")
+        /* console.log("FINALIZÓ LA RONDA") */
         var socketIdUsuarioA = gamesData[indexGame].socketIdUsuarioA
         var socketIdUsuarioB = gamesData[indexGame].socketIdUsuarioB
         io.to(socketIdUsuarioA).emit("START NEXT ROUND", {gameData: gamesData[indexGame]});
