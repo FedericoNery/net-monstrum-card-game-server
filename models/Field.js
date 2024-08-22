@@ -105,6 +105,73 @@ class Field {
     }
   }
 
+  quitarEnergiasPor(card) {
+    const color = card.color
+    const energiasARestar = card.energyCount
+    switch (color) {
+      case COLOR.RED:
+        if(this.cantidadesEnergias.red > 0){
+          this.cantidadesEnergias.red -= energiasARestar
+        }
+        break;
+      case COLOR.BLACK:
+        if(this.cantidadesEnergias.black > 0){
+          this.cantidadesEnergias.black -= energiasARestar
+        }
+        break;
+      case COLOR.BLUE:
+        if(this.cantidadesEnergias.blue > 0){
+          this.cantidadesEnergias.blue -= energiasARestar
+        }
+        break;
+      case COLOR.BROWN:
+        if(this.cantidadesEnergias.brown > 0){
+          this.cantidadesEnergias.brown -= energiasARestar
+        }
+        break;
+      case COLOR.GREEN:
+        if(this.cantidadesEnergias.green > 0){
+          this.cantidadesEnergias.green -= energiasARestar
+        }
+        break;
+      case COLOR.WHITE:
+        if(this.cantidadesEnergias.white > 0){
+          this.cantidadesEnergias.white -= energiasARestar
+        }
+        break;
+      default:
+        throw "Error con el tipo de energía";
+    }
+  }
+
+  agregarEnergiaPor(card){
+    const color = card.color
+    const energiasASumar = card.energyCount
+
+    switch (color) {
+      case COLOR.RED:
+        this.cantidadesEnergias.red += energiasASumar
+        break;
+      case COLOR.BLACK:
+        this.cantidadesEnergias.black += energiasASumar
+        break;
+      case COLOR.BLUE:
+        this.cantidadesEnergias.blue += energiasASumar
+        break;
+      case COLOR.BROWN:
+        this.cantidadesEnergias.brown += energiasASumar
+        break;
+      case COLOR.GREEN:
+        this.cantidadesEnergias.green += energiasASumar
+        break;
+      case COLOR.WHITE:
+        this.cantidadesEnergias.white += energiasASumar
+        break;
+      default:
+        throw "Error con el tipo de energía";
+    }
+  }
+
   descartarCartasMano(){
     if(this.hand.getLength() > 0){
       this.hand.getCartas().map((carta) => this.trash.agregarCarta(carta))

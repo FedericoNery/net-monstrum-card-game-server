@@ -126,7 +126,7 @@ class Game {
 
     pasarASiguienteRonda(){
         if(this.estadoDeLaRonda !== EstadosDeLaPartida.JUEGO_TERMINADO){
-            console.log("PASÓ A SIGUIENTE RONDA")
+            /* console.log("PASÓ A SIGUIENTE RONDA") */
             this.field1.descartarCartasMano()
             this.field1.descartarCartasCampo()
             this.field2.descartarCartasMano()
@@ -183,8 +183,8 @@ class Game {
             this.field2.invocarCartas(cartasId)
             this.player2SummonCards = true
         }
-        console.log(this.player1SummonCards)
-        console.log(this.player2SummonCards)
+        /* console.log(this.player1SummonCards)
+        console.log(this.player2SummonCards) */
     }
 
     finishedSummonPhase(){
@@ -210,6 +210,35 @@ class Game {
 
     finishBattlePhaseJugador2(){
         
+    }
+
+    activateEnergyCardJugador1(cardId){
+        const energyCard = this.field1.hand.cartas.filter(x => x.uniqueIdInGame === cardId)[0]
+        const color = energyCard.color
+        const energyCount = energyCard.energyCount
+        //Si es menor a cero aplica al rival
+        if(energyCount < 0){
+            this.field2.quitarEnergiasPor(energyCard);
+        }
+        else{
+            this.field1.agregarEnergiaPor(energyCard);
+        }
+        this.field1.hand.cartas = this.field1.hand.cartas.filter(x => x.uniqueIdInGame !== cardId)
+        
+    }
+
+    activateEnergyCardJugador2(cardId){
+        const energyCard = this.field2.hand.cartas.filter(x => x.uniqueIdInGame === cardId)[0]
+        const color = energyCard.color
+        const energyCount = energyCard.energyCount
+
+        if(energyCount < 0){
+            this.field1.quitarEnergiasPor(energyCard);
+        }
+        else{
+            this.field2.agregarEnergiaPor(energyCard);
+        }
+        this.field2.hand.cartas = this.field2.hand.cartas.filter(x => x.uniqueIdInGame !== cardId)
     }
 
     finishedRonda(){

@@ -26,6 +26,8 @@ const SUBSCRIPTIONS_EVENTS = {
     FINISH_LOAD_PHASE: 'finish load phase',
     FINISH_SUMMON_PHASE: 'finish summon phase',
     FINISH_COMPILE_PHASE: 'finish compile phase',
+
+    ACTIVATE_ENERGY_CARD: 'activateEnergyCard'
 }
 
 module.exports = {
