@@ -14,13 +14,15 @@ class Game {
         this.roundsPlayer2 = 0
         this.numeroJugadorGanador = null
         this.numeroJugadorPerdedor = null
+        this.player1FinishedLoadPhase = false
+        this.player2FinishedLoadPhase = false
         this.player1SummonCards = false
         this.player2SummonCards = false
-        this.estadoDeLaRonda = EstadosDeLaPartida.JUEGO_CREADO
+        this.estadoDeLaRonda = EstadosDeLaPartida.GAME_CREATED
     }
 
     initGame(){
-        this.estadoDeLaRonda = EstadosDeLaPartida.JUEGO_INICIADO
+        this.estadoDeLaRonda = EstadosDeLaPartida.GAME_STARTED
         this.shuffleDecks()
     }
 
@@ -30,7 +32,7 @@ class Game {
     }
 
     iniciarRonda(){
-        this.estadoDeLaRonda = EstadosDeLaPartida.RONDA_INICIADA
+        this.estadoDeLaRonda = EstadosDeLaPartida.ROUND_STARTED
     }
 
     setJugador1(jugador1){
@@ -54,8 +56,7 @@ class Game {
         this.field1.repartirCartas(6)
         this.field2.repartirCartas(6)
         this.contarEnergias()
-        this.estadoDeLaRonda = EstadosDeLaPartida.LOAD_PHASE
-        this.estadoDeLaRonda = EstadosDeLaPartida.SUMMON_PHASE
+        //this.estadoDeLaRonda = EstadosDeLaPartida.SUMMON_PHASE
     }
 
     contarEnergias() {
@@ -84,7 +85,7 @@ class Game {
         this.determinarGanadorDeLaRonda()
         this.determinarGanadorPartida()
         if(!this.estaFinalizado()){
-            this.estadoDeLaRonda = EstadosDeLaPartida.RONDA_TERMINADA
+            this.estadoDeLaRonda = EstadosDeLaPartida.FINISHED_ROUND
             this.pasarASiguienteRonda()    
         }
     }
@@ -113,19 +114,19 @@ class Game {
 
     determinarGanadorPartida() {
         if (this.roundsPlayer1 === 2) {
-            this.estadoDeLaRonda = EstadosDeLaPartida.JUEGO_TERMINADO
+            this.estadoDeLaRonda = EstadosDeLaPartida.FINISHED_GAME
             this.numeroJugadorGanador = this.player1.numero
             this.numeroJugadorPerdedor = this.player2.numero
         }
         else if (this.roundsPlayer2 === 2) {
-            this.estadoDeLaRonda = EstadosDeLaPartida.JUEGO_TERMINADO
+            this.estadoDeLaRonda = EstadosDeLaPartida.FINISHED_GAME
             this.numeroJugadorGanador = this.player2.numero
             this.numeroJugadorPerdedor = this.player1.numero
         }
     }
 
     pasarASiguienteRonda(){
-        if(this.estadoDeLaRonda !== EstadosDeLaPartida.JUEGO_TERMINADO){
+        if(this.estadoDeLaRonda !== EstadosDeLaPartida.FINISHED_GAME){
             /* console.log("PASÓ A SIGUIENTE RONDA") */
             this.field1.descartarCartasMano()
             this.field1.descartarCartasCampo()
@@ -137,14 +138,14 @@ class Game {
     }
 
     finalizarRonda(){
-        this.estadoDeLaRonda = EstadosDeLaPartida.RONDA_TERMINADA
+        this.estadoDeLaRonda = EstadosDeLaPartida.FINISHED_ROUND
     }
     iniciarRonda(){
-        this.estadoDeLaRonda = EstadosDeLaPartida.RONDA_INICIADA
+        this.estadoDeLaRonda = EstadosDeLaPartida.ROUND_STARTED
     }
 
     estaFinalizado(){
-        return this.estadoDeLaRonda === EstadosDeLaPartida.JUEGO_TERMINADO
+        return this.estadoDeLaRonda === EstadosDeLaPartida.FINISHED_GAME
     }
 
     ganoJugador1(){
@@ -161,10 +162,14 @@ class Game {
     }
 
     startDrawPhase(){
-        this.estadoDeLaRonda = EstadosDeLaPartida.JUEGO_INICIADO
+        this.estadoDeLaRonda = EstadosDeLaPartida.GAME_STARTED
         this.shuffleDecks()
-        this.estadoDeLaRonda = EstadosDeLaPartida.RONDA_INICIADA
+        this.estadoDeLaRonda = EstadosDeLaPartida.ROUND_STARTED
         this.repartirCartas()
+    }
+
+    startCompilePhase(){
+        this.estadoDeLaRonda = EstadosDeLaPartida.COMPILATION_PHASE
     }
 
     drawPhase(){
@@ -172,19 +177,16 @@ class Game {
     }
 
     finishSummonPhase(usuario, cartasId){
-        const { email, nombre_usuario } = usuario
-        const { email: emailJugador1, nombre_usuario: nombreUsuarioJugador1 } = this.player1
-        const { email: emailJugador2, nombre_usuario: nombreUsuarioJugador2 } = this.player2
-        if (email === emailJugador1 && nombre_usuario === nombreUsuarioJugador1){
+        const { username: nombreUsuarioJugador1 } = this.player1
+        const { username: nombreUsuarioJugador2 } = this.player2
+        if ( usuario === nombreUsuarioJugador2){ // ESTO ESTA MAL DEBERIA SER AL REVES
             this.field1.invocarCartas(cartasId)
             this.player1SummonCards = true
         } 
-        if (email === emailJugador2 && nombre_usuario === nombreUsuarioJugador2) {
+        if (usuario === nombreUsuarioJugador1 ) { // ESTO ESTA MAL DEBERIA SER AL REVES
             this.field2.invocarCartas(cartasId)
             this.player2SummonCards = true
         }
-        /* console.log(this.player1SummonCards)
-        console.log(this.player2SummonCards) */
     }
 
     finishedSummonPhase(){
@@ -210,6 +212,23 @@ class Game {
 
     finishBattlePhaseJugador2(){
         
+    }
+
+    finishLoadPhaseBy(usuarioId, socketId){
+        if (usuarioId === this.player1.username){
+            this.player1FinishedLoadPhase = true
+        }
+        if(usuarioId === this.player1.username){
+            this.player2FinishedLoadPhase = true
+        }
+    }
+    
+    finishedLoadPhase(){
+        return this.player1FinishedLoadPhase && this.player2FinishedLoadPhase
+    }
+
+    startSummonPhase(){
+        this.estadoDeLaRonda = EstadosDeLaPartida.SUMMON_PHASE
     }
 
     activateEnergyCardJugador1(cardId){
@@ -243,7 +262,11 @@ class Game {
 
     finishedRonda(){
         console.log(this.estadoDeLaRonda)
-        return this.estadoDeLaRonda === EstadosDeLaPartida.RONDA_TERMINADA
+        return this.estadoDeLaRonda === EstadosDeLaPartida.FINISHED_ROUND
+    }
+
+    toUpgradePhase(){
+        this.estadoDeLaRonda === EstadosDeLaPartida.UPGRADE_PHASE
     }
 }
 

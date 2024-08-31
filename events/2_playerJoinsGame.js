@@ -56,18 +56,18 @@ function playerJoinsGame({gameIdToJoin, user, deck}, io, gamesData, gameSocket) 
             let array = gamesData.filter(x => x.getGameId() === gameIdToJoin)
             const gameData = array[0]
 
-            const info = {
-                deck1: gameData.game.field1.deck,
-                hand1: gameData.game.field1.hand,
-                deck2: gameData.game.field2.deck,
-                hand2: gameData.game.field2.hand,
-                energies1: gameData.game.field1.cantidadesEnergias,
-                energies2: gameData.game.field2.cantidadesEnergias,
+            io.sockets.in(gameData.socketIdUsuarioA).emit("UPDATE GAME DATA", JSON.stringify({gameData: gameData}))
+            io.sockets.in(gameData.socketIdUsuarioB).emit("UPDATE GAME DATA", JSON.stringify({gameData: gameData}))
 
-            }
-
-            io.sockets.in(gameData.socketIdUsuarioA).emit(EMIT_EVENTS.START_DRAW_PHASE, JSON.stringify({gameData: gameData}))
-            io.sockets.in(gameData.socketIdUsuarioB).emit(EMIT_EVENTS.START_DRAW_PHASE, JSON.stringify({gameData: gameData}))
+            
+            setTimeout(() => {
+                var gameDataToJoin = gamesData.filter(x => x.getGameId() === gameIdToJoin)
+                gameDataToJoin[0].game.startCompilePhase()
+    
+                io.sockets.in(gameData.socketIdUsuarioA).emit(EMIT_EVENTS.START_COMPILE_PHASE)
+                io.sockets.in(gameData.socketIdUsuarioB).emit(EMIT_EVENTS.START_COMPILE_PHASE)
+            }, 1000)
+            
         }, 3000); 
 
         //EMIT START PHASE EVENT -> cambiar estado en cliente 

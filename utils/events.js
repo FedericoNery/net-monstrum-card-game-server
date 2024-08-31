@@ -23,9 +23,9 @@ const SUBSCRIPTIONS_EVENTS = {
 
     CALUMON_SELECTED: 'calumon-selected',
     FINISH_DRAW_PHASE: 'finish draw phase',
-    FINISH_LOAD_PHASE: 'finish load phase',
+    FINISH_COMPILATION_PHASE: 'FINISH_COMPILATION_PHASE',
     FINISH_SUMMON_PHASE: 'finish summon phase',
-    FINISH_COMPILE_PHASE: 'finish compile phase',
+    FINISH_UPGRADE_PHASE: 'FINISH_UPGRADE_PHASE',
 
     ACTIVATE_ENERGY_CARD: 'activateEnergyCard'
 }
