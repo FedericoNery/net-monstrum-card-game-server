@@ -1,3 +1,5 @@
+const { TYPE } = require("../utils/enums");
+
 class Mano {
     constructor(mano) {
       this.cartas = mano;
@@ -8,7 +10,7 @@ class Mano {
     }
     
     quitarCartas(listaIdsCartasAQuitar){
-      const cartasADescartar = this.cartas.filter(x => !listaIdsCartasAQuitar.includes(x.numero))
+      const cartasADescartar = this.cartas.filter(card => !listaIdsCartasAQuitar.includes(card.uniqueIdInGame))
       this.setCartas(cartasADescartar)
     }
     
@@ -25,11 +27,11 @@ class Mano {
     }
 
     getCartasAInvocarFrom(listaIdsCartasAInvocar){
-      return this.cartas.filter(x => 'ataque' in x && listaIdsCartasAInvocar.includes(x.numero))
+      return this.cartas.filter(card => card.type === TYPE.DIGIMON && listaIdsCartasAInvocar.includes(card.uniqueIdInGame))
     }
 
     getCartasOrdenadasPorAtaque(){
-      return this.cartas.filter(x => 'ataque' in x).sort((a, b) => (a.ataque > b.ataque) ? 1 : -1)
+      return this.cartas.filter(card => card.type === TYPE.DIGIMON ).sort((a, b) => (a.attackPoints > b.attackPoints) ? 1 : -1)
     }
 }
 

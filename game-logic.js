@@ -3,12 +3,12 @@ const { createNewGame } = require("./events/1_createNewGame")
 const { playerJoinsGame } = require("./events/2_playerJoinsGame")
 const { finishLoadPhase } = require("./events/5_finishLoadPhase")
 const { finishCompilePhase } = require("./events/6_finishCompilePhase")
-const { finishDrawPhase } = require("./events/6_finishDrawPhase")
 const { finishSummonPhase } = require("./events/6_finishSummonPhase")
 const { activateEnergyCard } = require("./events/activateEnergyCard")
 const { newMove } = require("./events/newMove")
 const { obtenerRooms } = require("./events/obtenerRooms")
 const { onDisconnect } = require("./events/onDisconnect")
+const PLAYER_ACTIONS = require("./models/PlayerActions")
 const { SUBSCRIPTIONS_EVENTS } = require("./utils/events")
 
 // gamesInSession stores an array of all active socket connections
@@ -49,10 +49,9 @@ const initializeGame = (sio, socket) => {
 
     //gameSocket.on('start-phase', startPhase)
     gameSocket.on(SUBSCRIPTIONS_EVENTS.CALUMON_SELECTED, (gameId, idCartaSelected) => calumonSelected(gameId, idCartaSelected))
-    gameSocket.on(SUBSCRIPTIONS_EVENTS.FINISH_DRAW_PHASE, (gameId, usuarioId) => finishDrawPhase(gameId, usuarioId, io))
-    gameSocket.on(SUBSCRIPTIONS_EVENTS.FINISH_LOAD_PHASE, (gameId, usuarioId, cartasId) => finishLoadPhase(gameId, usuarioId, cartasId, gamesData, io))
-    gameSocket.on(SUBSCRIPTIONS_EVENTS.FINISH_SUMMON_PHASE, (params) => finishSummonPhase(params, gamesData, io))
-    gameSocket.on(SUBSCRIPTIONS_EVENTS.FINISH_COMPILE_PHASE, (gameId, usuarioId, cartasId) => finishCompilePhase(gameId, usuarioId, cartasId, gamesData, io))
+    gameSocket.on(SUBSCRIPTIONS_EVENTS.FINISH_COMPILATION_PHASE, (params) => finishLoadPhase(params, gamesData, io))
+    gameSocket.on(PLAYER_ACTIONS.SUMMON_DIGIMONS, (params) => finishSummonPhase(params, gamesData, io))
+    gameSocket.on(SUBSCRIPTIONS_EVENTS.FINISH_UPGRADE_PHASE, (params) => finishUpgradePhase(params, gamesData, io))
 
     gameSocket.on(SUBSCRIPTIONS_EVENTS.ACTIVATE_ENERGY_CARD, (params) => activateEnergyCard(params, gamesData, io))
 }

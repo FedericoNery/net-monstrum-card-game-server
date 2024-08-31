@@ -18,7 +18,7 @@ class DigimonZone {
     getAtaque(){
       if(this.getLength() > 0)
       {
-        const ataques = this.cartas.map(x => x.ataque)
+        const ataques = this.cartas.map(x => x.attackPoints)
         return ataques.reduce((x,y) => x + y, 0)
       }
       return 0      
@@ -26,7 +26,7 @@ class DigimonZone {
 
     getDefensa(){
       if(this.getLength() > 0){
-        const defensas = this.cartas.map(x => x.defensa)
+        const defensas = this.cartas.map(x => x.healthPoints)
         return defensas.reduce((x,y) => x + y, 0)
       }
       return 0  
