@@ -6,10 +6,11 @@ const { finishRound } = require("./7_finishRound")
 async function finishSummonPhase({socketId, usuarioId, cardDigimonsToSummonIds}, gamesData, io){
     var gameId = getGameIdBySocketId(socketId, gamesData)
     var indexGame = getIndiceGameData(gameId, gamesData)
-
-    gamesData[indexGame].game.finishSummonPhase(usuarioId, cardDigimonsToSummonIds)
     var socketIdUsuarioA = gamesData[indexGame].socketIdUsuarioA
     var socketIdUsuarioB = gamesData[indexGame].socketIdUsuarioB
+
+    gamesData[indexGame].game.finishSummonPhase(usuarioId, cardDigimonsToSummonIds, socketId, socketIdUsuarioA, socketIdUsuarioB)
+
 
 
     if(gamesData[indexGame].game.finishedSummonPhase()){

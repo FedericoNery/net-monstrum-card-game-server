@@ -42,6 +42,12 @@ class Field {
     const cartasAInvocar = this.hand.getCartasAInvocarFrom(listaIdsCartasAInvocar)
     this.digimonZone.setCartas(cartasAInvocar)
     this.hand.quitarCartas(listaIdsCartasAInvocar)
+
+    for (let index = 0; index < cartasAInvocar.length; index++) {
+      const card = cartasAInvocar[index];
+      this.quitarEnergiasGastadasPor(card)
+    }
+
     this.attackPoints = this.getAtaque()
     this.healthPoints = this.getDefensa()
   }

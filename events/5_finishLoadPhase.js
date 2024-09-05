@@ -8,20 +8,17 @@ function finishLoadPhase({usuarioId, socketId}, gamesData, io) {
     var socketIdUsuarioA = gamesData[indexGame].socketIdUsuarioA
     var socketIdUsuarioB = gamesData[indexGame].socketIdUsuarioB
 
-    gamesData[indexGame].game.finishLoadPhaseBy(usuarioId, socketId)
-
-    if(socketId === socketIdUsuarioA){
-        io.to(socketIdUsuarioA).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
-    }
-
-    if(socketId === socketIdUsuarioB){
-        io.to(socketIdUsuarioB).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
-    }
+    gamesData[indexGame].game.finishLoadPhaseBy(usuarioId, socketId, socketIdUsuarioA, socketIdUsuarioB)
 
     if(gamesData[indexGame].game.finishedLoadPhase()){
+        console.log("ENTRO FINISH A Y B")
         gamesData[indexGame].game.startSummonPhase()
         io.sockets.in(gameId).emit(EMIT_EVENTS.START_SUMMON_PHASE)
         
+        io.to(socketIdUsuarioA).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
+        io.to(socketIdUsuarioB).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
+    }
+    else{
         io.to(socketIdUsuarioA).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
         io.to(socketIdUsuarioB).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
     }

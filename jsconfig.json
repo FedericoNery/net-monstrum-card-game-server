@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "target": "ES5",       // Indica la versión de ECMAScript
+      "checkJs": true        // Habilita la verificación de tipos en archivos JS
+    },
+    "include": [
+      "./models/**/*",
+      "./utils/**/*",
+      "./events/**/*",
+      "./services/**/*",
+    ]
+  }
+  

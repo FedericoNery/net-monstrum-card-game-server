@@ -39,6 +39,11 @@ class DigimonZone {
     clear(){
       this.cartas = []
     }
+    
+    getCardById(cardId){
+      const card = this.cartas.filter(x => x.uniqueIdInGame === cardId)[0]
+      return card
+    }
 }
 
 module.exports = DigimonZone

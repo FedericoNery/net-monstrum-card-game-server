@@ -15,7 +15,7 @@ function createNewGame({ deck, user }, gamesData, gamesIdsUsing, roomsConUnSoloJ
         gameData.setGameId(gameId)
         gameData.setSocketId(gameSocket.id)
         gameData.setSocketIdUsuarioA(gameSocket.id)
-
+        console.log("CREATED GAME gameSocket.id", gameSocket.id)
 
         gameData.setUsuarioA(user)
         gameData.setDeckA(deck)
