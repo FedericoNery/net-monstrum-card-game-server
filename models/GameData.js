@@ -6,7 +6,9 @@ class GameData{
         this.game = new Game()
         this.gameId = null
         this.socketId = null
+        //pertenece al jugador 1
         this.socketIdUsuarioA = null
+        //pertenece al jugador 2
         this.socketIdUsuarioB = null
     }
 

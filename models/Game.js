@@ -1,6 +1,6 @@
 const Field = require("./Field")
 const EstadosDeLaPartida = require('./EstadosPartida')
-
+const {EquipmentCard} = require('./EquipmentEffect') 
 //gameId sería el identificador de la sesión
 class Game {
     constructor() {
@@ -16,6 +16,8 @@ class Game {
         this.numeroJugadorPerdedor = null
         this.player1FinishedLoadPhase = false
         this.player2FinishedLoadPhase = false
+        this.player1FinishedUpgradePhase = false
+        this.player2FinishedUpgradePhase = false
         this.player1SummonCards = false
         this.player2SummonCards = false
         this.estadoDeLaRonda = EstadosDeLaPartida.GAME_CREATED
@@ -90,6 +92,31 @@ class Game {
         }
     }
 
+    player1AttacksPlayer2(){
+        const attackPlayer1 = this.field1.getAtaque()
+        const healthPlayer2 = this.field2.getDefensa()
+        
+        this.field1.attackPoints = 0
+        this.field2.healthPoints = healthPlayer2 - attackPlayer1 > 0 ? healthPlayer2 - attackPlayer1 : 0
+    }
+
+    player2AttacksPlayer1(){
+        const attackPlayer2 = this.field2.getAtaque()
+        const healthPlayer1 = this.field1.getDefensa()
+        
+        this.field2.attackPoints = 0
+        this.field1.healthPoints = healthPlayer1 - attackPlayer2 > 0 ? healthPlayer1 - attackPlayer2 : 0
+    }
+
+    resolveWinner(){
+        if (this.field2.healthPoints > this.field1.healthPoints) {
+            this.roundsPlayer2 += 1
+        }
+        else { //TODO CASO DE EMPATE
+            this.roundsPlayer1 += 1
+        }
+    }
+
     determinarGanadorDeLaRonda() {
         const ataqueJugador = this.field1.getAtaque()
         const ataqueComputadora = this.field2.getAtaque()
@@ -140,9 +167,6 @@ class Game {
     finalizarRonda(){
         this.estadoDeLaRonda = EstadosDeLaPartida.FINISHED_ROUND
     }
-    iniciarRonda(){
-        this.estadoDeLaRonda = EstadosDeLaPartida.ROUND_STARTED
-    }
 
     estaFinalizado(){
         return this.estadoDeLaRonda === EstadosDeLaPartida.FINISHED_GAME
@@ -176,14 +200,14 @@ class Game {
         this.repartirCartas()
     }
 
-    finishSummonPhase(usuario, cartasId){
+    finishSummonPhase(usuario, cartasId, socketId, socketIdUsuarioA, socketIdUsuarioB){
         const { username: nombreUsuarioJugador1 } = this.player1
         const { username: nombreUsuarioJugador2 } = this.player2
-        if ( usuario === nombreUsuarioJugador2){ // ESTO ESTA MAL DEBERIA SER AL REVES
+        if ( socketId === socketIdUsuarioA){
             this.field1.invocarCartas(cartasId)
             this.player1SummonCards = true
         } 
-        if (usuario === nombreUsuarioJugador1 ) { // ESTO ESTA MAL DEBERIA SER AL REVES
+        if (socketId === socketIdUsuarioB ) {
             this.field2.invocarCartas(cartasId)
             this.player2SummonCards = true
         }
@@ -214,11 +238,11 @@ class Game {
         
     }
 
-    finishLoadPhaseBy(usuarioId, socketId){
-        if (usuarioId === this.player1.username){
+    finishLoadPhaseBy(usuarioId, socketId, socketIdUsuarioA, socketIdUsuarioB){
+        if (socketId === socketIdUsuarioA){
             this.player1FinishedLoadPhase = true
         }
-        if(usuarioId === this.player1.username){
+        if(socketId === socketIdUsuarioB){
             this.player2FinishedLoadPhase = true
         }
     }
@@ -260,13 +284,46 @@ class Game {
         this.field2.hand.cartas = this.field2.hand.cartas.filter(x => x.uniqueIdInGame !== cardId)
     }
 
+    activateEquipmentCardJugador1(cardDigimonId, cardEquipmentId){
+        const {name, attackPoints, healthPoints, quantityOfTargets, targetScope} = this.field1.hand.getCardById(cardEquipmentId)
+        const cardEquipment = new EquipmentCard(name, attackPoints, healthPoints, quantityOfTargets, targetScope)
+        
+        const cardDigimon = this.field1.digimonZone.getCardById(cardDigimonId)
+        cardEquipment.applyTo([cardDigimon.uniqueIdInGame], this.field1.digimonZone)
+        //VER CASO DE PARTIAL Y ALL
+    }
+
+    activateEquipmentCardJugador2(cardDigimonId, cardEquipmentId){
+        const {name, attackPoints, healthPoints, quantityOfTargets, targetScope} = this.field1.hand.getCardById(cardEquipmentId)
+        const cardEquipment = new EquipmentCard(name, attackPoints, healthPoints, quantityOfTargets, targetScope)
+        
+        const cardDigimon = this.field2.digimonZone.getCardById(cardDigimonId)
+        cardEquipment.applyTo([cardDigimon.uniqueIdInGame], this.field2.digimonZone)
+        //VER CASO DE PARTIAL Y ALL
+    }
+
     finishedRonda(){
         console.log(this.estadoDeLaRonda)
         return this.estadoDeLaRonda === EstadosDeLaPartida.FINISHED_ROUND
     }
 
+    finishUpgradePhase(usuarioId, cardDigimonsToSummonIds, socketId, socketIdUsuarioA, socketIdUsuarioB){
+        if (socketId === socketIdUsuarioA){
+            this.player1FinishedUpgradePhase = true
+        }
+        if(socketId === socketIdUsuarioB){
+            this.player2FinishedUpgradePhase = true
+        }
+    }
+
+    isFinishedUpgradePhase(){
+        return this.player1FinishedUpgradePhase && this.player2FinishedUpgradePhase
+    }
+
+
+
     toUpgradePhase(){
-        this.estadoDeLaRonda === EstadosDeLaPartida.UPGRADE_PHASE
+        this.estadoDeLaRonda = EstadosDeLaPartida.UPGRADE_PHASE
     }
 }
 

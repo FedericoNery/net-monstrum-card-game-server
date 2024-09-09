@@ -1,5 +1,5 @@
 const EMIT_EVENTS = {
-    START_GAME: 'start game',
+    START_GAME: 'START_GAME',
     NEW_GAME_CREATED: 'new game created',
     START_DRAW_PHASE: 'start draw phase',
     START_LOAD_PHASE: 'start load phase',
@@ -27,7 +27,8 @@ const SUBSCRIPTIONS_EVENTS = {
     FINISH_SUMMON_PHASE: 'finish summon phase',
     FINISH_UPGRADE_PHASE: 'FINISH_UPGRADE_PHASE',
 
-    ACTIVATE_ENERGY_CARD: 'activateEnergyCard'
+    ACTIVATE_ENERGY_CARD: 'activateEnergyCard',
+    ACTIVATE_EQUIPMENT_CARD: 'activateEquipmentCard'
 }
 
 module.exports = {

@@ -3,7 +3,7 @@ const { drawPhase } = require("./2_drawPhase")
 const { startPhase } = require("./3_startPhase")
 const {startDrawPhase} = require("./3_startDrawPhase")
 
-function playerJoinsGame({gameIdToJoin, user, deck}, io, gamesData, gameSocket) {
+function playerJoinsGame({gameIdToJoin, user, deck, socketId}, io, gamesData, gameSocket) {
     /**
      * Joins the given socket to a session with it's gameId
      */
@@ -29,6 +29,7 @@ function playerJoinsGame({gameIdToJoin, user, deck}, io, gamesData, gameSocket) 
         gamesData[indexGame].setUsuarioB(user)
         gamesData[indexGame].setDeckB(deck)
         gamesData[indexGame].setSocketIdUsuarioB(gameSocket.id)
+        console.log("JOIN GAME gameSocket.id", gameSocket.id)
 
 
         // Emit an event notifying the clients that the player has joined the room.
