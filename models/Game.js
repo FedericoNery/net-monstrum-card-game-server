@@ -23,6 +23,20 @@ class Game {
         this.estadoDeLaRonda = EstadosDeLaPartida.GAME_CREATED
     }
 
+    resetCheckOfActionsByPlayers(){
+        this.player1FinishedLoadPhase = false
+        this.player2FinishedLoadPhase = false
+        this.player1FinishedUpgradePhase = false
+        this.player2FinishedUpgradePhase = false
+        this.player1SummonCards = false
+        this.player2SummonCards = false
+    }
+
+    resetStateOfFields(){
+        this.field1.resetState()
+        this.field2.resetState()
+    }
+
     initGame(){
         this.estadoDeLaRonda = EstadosDeLaPartida.GAME_STARTED
         this.shuffleDecks()
@@ -115,6 +129,10 @@ class Game {
         else { //TODO CASO DE EMPATE
             this.roundsPlayer1 += 1
         }
+    }
+
+    resolveIfGameIsFinished(){
+        this.estadoDeLaRonda = this.roundsPlayer1 === 2 || this.roundsPlayer2 === 2 ? EstadosDeLaPartida.FINISHED_GAME : EstadosDeLaPartida.FINISHED_ROUND
     }
 
     determinarGanadorDeLaRonda() {
@@ -303,7 +321,6 @@ class Game {
     }
 
     finishedRonda(){
-        console.log(this.estadoDeLaRonda)
         return this.estadoDeLaRonda === EstadosDeLaPartida.FINISHED_ROUND
     }
 

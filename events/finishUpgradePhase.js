@@ -31,6 +31,7 @@ async function finishUpgradePhase({socketId, usuarioId, cardDigimonsToSummonIds}
 
                 setTimeout(() => {
                     gamesData[indexGame].game.resolveWinner()
+                    gamesData[indexGame].game.resolveIfGameIsFinished()
                     io.to(socketIdUsuarioA).emit(EMIT_EVENTS.FINISH_BATTLE_PHASE, JSON.stringify({gameData: gamesData[indexGame]}))
                     io.to(socketIdUsuarioB).emit(EMIT_EVENTS.FINISH_BATTLE_PHASE, JSON.stringify({gameData: gamesData[indexGame]}))
 
