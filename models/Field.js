@@ -17,6 +17,24 @@ class Field {
     this.cantidadesEnergias = null
   }
 
+  discardDigimonZoneAndHandCards(){
+    const handCards = this.hand.getCartas();
+    const digimonZoneCards = this.digimonZone.getCartas();
+
+    this.hand.clear()
+    this.digimonZone.clear()
+
+    this.trash.agregarCartas(handCards) //TODO :: en realidad debería ir agregandose a medida que se usan
+    this.trash.agregarCartas(digimonZoneCards)//TODO :: en realidad debería ir agregandose a medida que se usan
+
+  }
+
+  resetState(){
+    this.attackPoints = 0
+    this.healthPoints = 0
+    this.discardDigimonZoneAndHandCards()
+  }
+
   setMazo(mazo){
     this.deck = mazo
   }
