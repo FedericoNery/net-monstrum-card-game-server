@@ -92,6 +92,31 @@ class Game {
         }
     }
 
+    player1AttacksPlayer2(){
+        const attackPlayer1 = this.field1.getAtaque()
+        const healthPlayer2 = this.field2.getDefensa()
+        
+        this.field1.attackPoints = 0
+        this.field2.healthPoints = healthPlayer2 - attackPlayer1 > 0 ? healthPlayer2 - attackPlayer1 : 0
+    }
+
+    player2AttacksPlayer1(){
+        const attackPlayer2 = this.field2.getAtaque()
+        const healthPlayer1 = this.field1.getDefensa()
+        
+        this.field2.attackPoints = 0
+        this.field1.healthPoints = healthPlayer1 - attackPlayer2 > 0 ? healthPlayer1 - attackPlayer2 : 0
+    }
+
+    resolveWinner(){
+        if (this.field2.healthPoints > this.field1.healthPoints) {
+            this.roundsPlayer2 += 1
+        }
+        else { //TODO CASO DE EMPATE
+            this.roundsPlayer1 += 1
+        }
+    }
+
     determinarGanadorDeLaRonda() {
         const ataqueJugador = this.field1.getAtaque()
         const ataqueComputadora = this.field2.getAtaque()
@@ -290,6 +315,12 @@ class Game {
             this.player2FinishedUpgradePhase = true
         }
     }
+
+    isFinishedUpgradePhase(){
+        return this.player1FinishedUpgradePhase && this.player2FinishedUpgradePhase
+    }
+
+
 
     toUpgradePhase(){
         this.estadoDeLaRonda = EstadosDeLaPartida.UPGRADE_PHASE
