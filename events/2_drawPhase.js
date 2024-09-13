@@ -8,4 +8,4 @@ function drawPhase(gameId, gamesData, io) {
     //io.to(data.id).emit('', move);
 }
 
-module.exports = { drawPhase }
+export { drawPhase }

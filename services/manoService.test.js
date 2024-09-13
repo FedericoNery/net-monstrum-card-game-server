@@ -1,10 +1,10 @@
-const { 
+import { 
     obtenerEnergias, 
     contarEnergias, 
     esValidaLaInvocacion, 
     obtenerEnergiasYSumarlas 
-} = require('./manoService');
-const { COLOR } = require('../utils/enums');
+} from './manoService.js'
+import { COLOR } from '../utils/enums.js'
 
 describe('Tests para las funciones de manejo de energías', () => {
     test('contarEnergias debería contar correctamente las energías de un color específico en la mano', () => {

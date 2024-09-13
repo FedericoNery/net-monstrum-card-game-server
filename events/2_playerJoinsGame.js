@@ -1,7 +1,5 @@
-const { EMIT_EVENTS } = require("../utils/events")
-const { drawPhase } = require("./2_drawPhase")
-const { startPhase } = require("./3_startPhase")
-const {startDrawPhase} = require("./3_startDrawPhase")
+import { EMIT_EVENTS } from "../utils/events.js"
+import {startDrawPhase} from "./3_startDrawPhase.js"
 
 function playerJoinsGame({gameIdToJoin, user, deck, socketId}, io, gamesData, gameSocket) {
     /**
@@ -84,4 +82,4 @@ function playerJoinsGame({gameIdToJoin, user, deck, socketId}, io, gamesData, ga
     }
 }
 
-module.exports = { playerJoinsGame }
+export { playerJoinsGame }

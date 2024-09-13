@@ -1,6 +1,6 @@
-const Field = require("./Field")
-const EstadosDeLaPartida = require('./EstadosPartida')
-const {EquipmentCard} = require('./EquipmentEffect') 
+import Field from "./Field.js"
+import EstadosDeLaPartida  from './EstadosPartida.js'
+import {EquipmentCard} from './EquipmentEffect.js'
 //gameId sería el identificador de la sesión
 class Game {
     constructor() {
@@ -308,16 +308,30 @@ class Game {
         
         const cardDigimon = this.field1.digimonZone.getCardById(cardDigimonId)
         cardEquipment.applyTo([cardDigimon.uniqueIdInGame], this.field1.digimonZone)
+        
+        this.field1.discardFromHand(cardEquipmentId);
+
+        this.field1.attackPoints = this.field1.getAtaque()
+        this.field1.healthPoints = this.field1.getDefensa()
+        console.log(this.field1.attackPoints)
+        console.log(this.field1.healthPoints)
         //VER CASO DE PARTIAL Y ALL
     }
 
     activateEquipmentCardJugador2(cardDigimonId, cardEquipmentId){
-        const {name, attackPoints, healthPoints, quantityOfTargets, targetScope} = this.field1.hand.getCardById(cardEquipmentId)
+        const {name, attackPoints, healthPoints, quantityOfTargets, targetScope} = this.field2.hand.getCardById(cardEquipmentId)
         const cardEquipment = new EquipmentCard(name, attackPoints, healthPoints, quantityOfTargets, targetScope)
         
         const cardDigimon = this.field2.digimonZone.getCardById(cardDigimonId)
         cardEquipment.applyTo([cardDigimon.uniqueIdInGame], this.field2.digimonZone)
         //VER CASO DE PARTIAL Y ALL
+
+        this.field2.discardFromHand(cardEquipmentId);
+
+        this.field2.attackPoints = this.field2.getAtaque()
+        this.field2.healthPoints = this.field2.getDefensa()
+        console.log(this.field2.attackPoints)
+        console.log(this.field2.healthPoints)
     }
 
     finishedRonda(){
@@ -344,4 +358,4 @@ class Game {
     }
 }
 
-module.exports = Game
+export default Game

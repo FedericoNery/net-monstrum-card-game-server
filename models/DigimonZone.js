@@ -18,7 +18,7 @@ class DigimonZone {
     getAtaque(){
       if(this.getLength() > 0)
       {
-        const ataques = this.cartas.map(x => x.attackPoints)
+        const ataques = this.cartas.map(x => x.currentAttackPoints)
         return ataques.reduce((x,y) => x + y, 0)
       }
       return 0      
@@ -26,7 +26,7 @@ class DigimonZone {
 
     getDefensa(){
       if(this.getLength() > 0){
-        const defensas = this.cartas.map(x => x.healthPoints)
+        const defensas = this.cartas.map(x => x.currentHealthPoints)
         return defensas.reduce((x,y) => x + y, 0)
       }
       return 0  
@@ -44,6 +44,14 @@ class DigimonZone {
       const card = this.cartas.filter(x => x.uniqueIdInGame === cardId)[0]
       return card
     }
+
+    applyEquipmentEffectTo(cardDigimonId, effect){
+      const uniqueIds = this.cartas.map(x => x.uniqueIdInGame)
+      const indexCard = uniqueIds.indexOf(cardDigimonId)
+      this.cartas[indexCard].currentAttackPoints += effect.attackPoints 
+      this.cartas[indexCard].currentHealthPoints += effect.healthPoints
+      //TODO VER COMO IMPLEMENTAR CARTAS QUE REBAJAN PUNTOS DE ATAQUE Y VIDA 
+    }
 }
 
-module.exports = DigimonZone
+export default DigimonZone

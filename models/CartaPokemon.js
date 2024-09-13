@@ -1,5 +1,5 @@
-const Carta = require("./Carta")
-const { CODIGO_TIPO_CARTA, NIVEL_EVOLUCION } = require("../utils/enums")
+import Carta from "./Carta.js"
+//import { CODIGO_TIPO_CARTA, NIVEL_EVOLUCION } from "../utils/enums.js"
 class CartaPokemon extends Carta {
     constructor(numero, nombre, ps, ataque, defensa, ataque_esp, defensa_esp, velocidad, suma, tipo_energia, cantidad_energia) {
         super(numero, nombre);
@@ -586,4 +586,4 @@ class CartaPokemon extends Carta {
     }
 }
 
-module.exports = CartaPokemon
+export default CartaPokemon

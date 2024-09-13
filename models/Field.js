@@ -1,9 +1,9 @@
-const Hand = require('./Hand')
-const Trash = require('./Trash')
-const Deck = require('./Deck')
-const DigimonZone = require('./DigimonZone')
-const { obtenerEnergias, obtenerEnergiasYSumarlas } = require('../services/manoService')
-const {COLOR} = require('../utils/enums')
+import Hand  from './Hand.js'
+import Trash  from './Trash.js' 
+import Deck  from './Deck.js'
+import DigimonZone  from './DigimonZone.js'
+import { obtenerEnergias, obtenerEnergiasYSumarlas } from '../services/manoService.js'
+import {COLOR} from '../utils/enums.js'
 
 
 class Field {
@@ -27,6 +27,12 @@ class Field {
     this.trash.agregarCartas(handCards) //TODO :: en realidad debería ir agregandose a medida que se usan
     this.trash.agregarCartas(digimonZoneCards)//TODO :: en realidad debería ir agregandose a medida que se usan
 
+  }
+
+  discardFromHand(cardId){
+    const cardToTrash = this.hand.getCardById(cardId)
+    this.trash.agregarCarta(cardToTrash)
+    this.hand.cartas = this.hand.cartas.filter(x => x.uniqueIdInGame !== cardId)
   }
 
   resetState(){
@@ -237,4 +243,4 @@ class Field {
   }
 }
 
-module.exports = Field
+export default Field

@@ -9,4 +9,4 @@ function getGameIdBySocketId(socketId, gamesData){
     return game.getGameId()
 }
 
-module.exports = { getIndiceGameData, getGameIdBySocketId }
+export { getIndiceGameData, getGameIdBySocketId }

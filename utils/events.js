@@ -31,7 +31,7 @@ const SUBSCRIPTIONS_EVENTS = {
     ACTIVATE_EQUIPMENT_CARD: 'activateEquipmentCard'
 }
 
-module.exports = {
+export {
     EMIT_EVENTS,
     SUBSCRIPTIONS_EVENTS
 }

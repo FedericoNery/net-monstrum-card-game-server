@@ -1,4 +1,4 @@
-const { TYPE } = require("../utils/enums");
+import { TYPE } from "../utils/enums.js"
 
 class Mano {
     constructor(mano) {
@@ -33,7 +33,12 @@ class Mano {
     getCartasOrdenadasPorAtaque(){
       return this.cartas.filter(card => card.type === TYPE.DIGIMON ).sort((a, b) => (a.attackPoints > b.attackPoints) ? 1 : -1)
     }
+
+    getCardById(cardId){
+      const card = this.cartas.filter(x => x.uniqueIdInGame === cardId)[0]
+      return card
+    }
 }
 
 
-module.exports = Mano
+export default Mano

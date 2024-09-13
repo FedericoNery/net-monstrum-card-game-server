@@ -40,4 +40,9 @@ const Enum = {
     FASES_JUEGO,
 }
 
-module.exports = Enum
+export { 
+    Enum,
+    TYPE,
+    FASES_JUEGO,
+    COLOR,
+}

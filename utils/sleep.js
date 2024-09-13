@@ -6,4 +6,4 @@ async function sleep(tiempo) {
     await timeout(tiempo);
 }
 
-module.exports = { sleep }
+export { sleep }

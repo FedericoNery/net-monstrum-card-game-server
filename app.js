@@ -1,8 +1,8 @@
-const express = require('express')
-const {createServer} = require('http')
-const { Server } = require('socket.io')
-const { instrument } = require("@socket.io/admin-ui");
-const { initializeGame } = require('./game-logic')
+import express from 'express'
+import {createServer} from 'http'
+import { Server } from 'socket.io'
+import { instrument } from "@socket.io/admin-ui"
+import { initializeGame } from './game-logic.js'
 
 const app = express()
 const httpServer = createServer(app)
@@ -40,7 +40,10 @@ httpServer.listen(process.env.PORT || 8000, () => {
   console.log(`Socket.IO server running at http://localhost:${process.env.PORT || 8000}/`);
 })
 
-module.exports = { io_from_app: io, server_from_app: httpServer }
+/* export { 
+  io_from_app: io, 
+  server_from_app: httpServer 
+} */
 
 
 

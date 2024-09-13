@@ -1,7 +1,7 @@
-const { EMIT_EVENTS } = require("../utils/events")
+import { EMIT_EVENTS } from "../utils/events.js"
 
 function obtenerRooms(roomsConUnSoloJugador, gameSocket) {
     gameSocket.emit(EMIT_EVENTS.SEND_ROOMS, JSON.stringify({ roomsConUnSoloJugador }))
 }
 
-module.exports = { obtenerRooms }
+export { obtenerRooms }

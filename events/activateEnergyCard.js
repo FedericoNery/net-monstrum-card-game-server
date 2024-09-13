@@ -1,4 +1,4 @@
-const { getGameIdBySocketId, getIndiceGameData } = require("../services/getIndiceGameData")
+import { getGameIdBySocketId, getIndiceGameData } from "../services/getIndiceGameData.js"
 
 function activateEnergyCard({socketId, username, cardId}, gamesData, io) {
     var gameId = getGameIdBySocketId(socketId, gamesData)
@@ -19,4 +19,4 @@ function activateEnergyCard({socketId, username, cardId}, gamesData, io) {
     io.to(socketIdUsuarioB).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
 }
 
-module.exports = { activateEnergyCard }
+export { activateEnergyCard }

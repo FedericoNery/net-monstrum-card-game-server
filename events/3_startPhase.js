@@ -13,4 +13,4 @@ function startPhase(gameId, gamesData, io) {
 
 }
 
-module.exports = { startPhase }
+export { startPhase }

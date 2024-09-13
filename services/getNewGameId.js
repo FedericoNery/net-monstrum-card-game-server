@@ -1,9 +1,9 @@
-const { v4: uuidv4 } = require('uuid');
+import { v4 } from 'uuid'
 
 function getNewGameId(gamesIdsUsing) {
     let x = null
     while (gamesIdsUsing.length === 0 || !gamesIdsUsing.includes(x)) {
-        x = uuidv4();
+        x = v4();
         if (!gamesIdsUsing.includes(x)) {
             gamesIdsUsing.push(x)
         }
@@ -11,4 +11,4 @@ function getNewGameId(gamesIdsUsing) {
     return x
 }
 
-module.exports = { getNewGameId }
+export { getNewGameId }

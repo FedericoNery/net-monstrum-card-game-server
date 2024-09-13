@@ -13,4 +13,4 @@ function startDrawPhase(gameId, gamesData, io) {
 
 }
 
-module.exports = { startDrawPhase }
+export { startDrawPhase }

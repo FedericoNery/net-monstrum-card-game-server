@@ -98,7 +98,7 @@ async function crearMazosParaElUsuario(numeroUsuario) {
     return idsDeMazos
 }
 
-module.exports = {
+export {
     repartirMano: repartirMano,
     mezclar: mezclar,
     agarrarCarta: agarrarCarta,

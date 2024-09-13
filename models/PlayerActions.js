@@ -5,4 +5,4 @@ const PLAYER_ACTIONS = {
     ACTIVATE_PROGRAMM_CARD: 'ACTIVATE_PROGRAMM_CARD'
 }
 
-module.exports = PLAYER_ACTIONS 
+export default PLAYER_ACTIONS 

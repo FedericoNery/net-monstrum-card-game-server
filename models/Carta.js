@@ -5,4 +5,4 @@ class Carta {
     }
 }
 
-module.exports = Carta
+export default Carta

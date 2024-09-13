@@ -1,4 +1,4 @@
-const { getGameIdBySocketId, getIndiceGameData } = require("../services/getIndiceGameData")
+import { getGameIdBySocketId, getIndiceGameData } from "../services/getIndiceGameData.js"
 
 function activateEquipmentCard({socketId, userId, cardDigimonId, cardEquipmentId}, gamesData, io) {
     var gameId = getGameIdBySocketId(socketId, gamesData)
@@ -8,13 +8,18 @@ function activateEquipmentCard({socketId, userId, cardDigimonId, cardEquipmentId
 
     if (socketIdUsuarioA == socketId){
         gamesData[indexGame].game.activateEquipmentCardJugador1(cardDigimonId, cardEquipmentId)
+        io.to(socketIdUsuarioA).emit("AFTER ACTIVATED EQUIPMENT", JSON.stringify({cardEquipmentId, cardDigimonId}));
     }
     if(socketIdUsuarioB == socketId){
         gamesData[indexGame].game.activateEquipmentCardJugador2(cardDigimonId, cardEquipmentId)
+        io.to(socketIdUsuarioB).emit("AFTER ACTIVATED EQUIPMENT", JSON.stringify({cardEquipmentId, cardDigimonId}));
     }
 
-    io.to(socketIdUsuarioA).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
-    io.to(socketIdUsuarioB).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
+    setTimeout(() => {
+        io.to(socketIdUsuarioA).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
+        io.to(socketIdUsuarioB).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
+    }, 1000)
+    
 }
 
-module.exports = { activateEquipmentCard }
+export { activateEquipmentCard }
