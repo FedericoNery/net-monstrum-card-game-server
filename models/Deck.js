@@ -1,4 +1,4 @@
-const CartaPokemon = require("./CartaPokemon");
+import CartaPokemon from "./CartaPokemon.js"
 
 class Mazo {
     constructor(cartas) {
@@ -42,4 +42,4 @@ class Mazo {
 }
 
 
-module.exports = Mazo
+export default Mazo

@@ -1,6 +1,6 @@
-const GameData = require("../models/GameData")
-const { getNewGameId } = require("../services/getNewGameId")
-const { EMIT_EVENTS } = require("../utils/events")
+import GameData from "../models/GameData.js"
+import { getNewGameId } from "../services/getNewGameId.js"
+import { EMIT_EVENTS } from "../utils/events.js"
 
 function createNewGame({ deck, user }, gamesData, gamesIdsUsing, roomsConUnSoloJugador, gameSocket) {
     // Return the Room ID (gameId) and the socket ID (mySocketId) to the browser client
@@ -28,4 +28,4 @@ function createNewGame({ deck, user }, gamesData, gamesIdsUsing, roomsConUnSoloJ
     }
 }
 
-module.exports = { createNewGame }
+export { createNewGame }

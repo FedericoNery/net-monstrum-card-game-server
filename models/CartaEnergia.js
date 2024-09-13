@@ -1,4 +1,4 @@
-const Carta = require("./Carta")
+import Carta from "./Carta"
 
 class CartaEnergia extends Carta {
     constructor(numero, nombre, energias) {
@@ -7,4 +7,4 @@ class CartaEnergia extends Carta {
     }
   }
 
-module.exports = CartaEnergia
+export default CartaEnergia

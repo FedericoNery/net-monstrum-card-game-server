@@ -1,4 +1,5 @@
-const { EMIT_EVENTS } = require("../utils/events")
+import { getIndiceGameData } from "../services/getIndiceGameData.js"
+import { EMIT_EVENTS } from "../utils/events.js"
 
 function finishCompilePhase(gameId, usuarioId, cartasId, gamesData, io){
     var indexGame = getIndiceGameData(gameId, gamesData)
@@ -26,4 +27,4 @@ function finishCompilePhase(gameId, usuarioId, cartasId, gamesData, io){
     }
 }
 
-module.exports = { finishCompilePhase }
+export { finishCompilePhase }

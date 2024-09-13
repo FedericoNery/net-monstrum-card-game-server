@@ -1,4 +1,4 @@
-const {COLOR} = require('../utils/enums')
+import {COLOR} from '../utils/enums.js'
 
 const obtenerEnergias = (mano) => {
     return {
@@ -69,9 +69,9 @@ const quitarEnergiasPorCarta = (energias, cartasSeleccionadas) => {
 }
 
 
-module.exports = {
-    obtenerEnergias: obtenerEnergias,
-    contarEnergias: contarEnergias,
-    esValidaLaInvocacion: esValidaLaInvocacion,
-    obtenerEnergiasYSumarlas: obtenerEnergiasYSumarlas
+export {
+    obtenerEnergias,
+    contarEnergias,
+    esValidaLaInvocacion,
+    obtenerEnergiasYSumarlas
 }

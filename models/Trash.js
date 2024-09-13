@@ -15,4 +15,4 @@ class Trash {
 }
 
 
-module.exports = Trash
+export default Trash

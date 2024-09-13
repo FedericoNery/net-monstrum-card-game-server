@@ -1,4 +1,4 @@
-const { EMIT_EVENTS } = require("../utils/events");
+import { EMIT_EVENTS } from "../utils/events.js";
 
 function finishRound(indexGame, gamesData, io){
     if(gamesData[indexGame].game.finishedRonda()){
@@ -27,4 +27,4 @@ function finishRound(indexGame, gamesData, io){
     }
 }
 
-module.exports = { finishRound }
+export { finishRound }

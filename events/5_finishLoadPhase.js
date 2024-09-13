@@ -1,5 +1,5 @@
-const { getIndiceGameData, getGameIdBySocketId } = require("../services/getIndiceGameData")
-const { EMIT_EVENTS } = require("../utils/events")
+import { getIndiceGameData, getGameIdBySocketId } from "../services/getIndiceGameData.js"
+import { EMIT_EVENTS } from "../utils/events.js"
 
 function finishLoadPhase({usuarioId, socketId}, gamesData, io) { 
     var gameId = getGameIdBySocketId(socketId, gamesData)
@@ -24,4 +24,4 @@ function finishLoadPhase({usuarioId, socketId}, gamesData, io) {
     }
 }
 
-module.exports = { finishLoadPhase }
+export { finishLoadPhase }

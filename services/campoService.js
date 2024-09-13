@@ -68,7 +68,7 @@ const devolverListaEvoluciones = (campo) =>{
     return obtenerListaPokemonAEvolucionar(sinRepeticiones, campo).filter(pokemon => pokemon.cantidad >= 3)
 }
 
-module.exports = {
+export {
     determinarGanador : determinarGanador,
     atacar : atacar,
     calcularAtaque : calcularAtaque,

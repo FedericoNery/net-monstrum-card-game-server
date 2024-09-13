@@ -1,7 +1,4 @@
-const { getIndiceGameData, getGameIdBySocketId } = require("../services/getIndiceGameData")
-const { EMIT_EVENTS } = require("../utils/events")
-const { sleep } = require("../utils/sleep")
-const { finishRound } = require("./7_finishRound")
+import { getIndiceGameData, getGameIdBySocketId } from "../services/getIndiceGameData.js"
 
 async function finishSummonPhase({socketId, usuarioId, cardDigimonsToSummonIds}, gamesData, io){
     var gameId = getGameIdBySocketId(socketId, gamesData)
@@ -48,4 +45,4 @@ async function finishSummonPhase({socketId, usuarioId, cardDigimonsToSummonIds},
     
 }
 
-module.exports = { finishSummonPhase }
+export { finishSummonPhase }

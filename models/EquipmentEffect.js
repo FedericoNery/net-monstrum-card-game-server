@@ -6,8 +6,8 @@
     }
   
     applyTo(cardDigimon){
-      cardDigimon.attackPoints += attackPoints;
-      cardDigimon.healthPoints += healthPoints;
+      cardDigimon.attackPoints += this.attackPoints;
+      cardDigimon.healthPoints += this.healthPoints;
     }
   }
 
@@ -42,17 +42,17 @@
       }
 
       applyTo(cardDigimonIds, digimonZone){
-        const effects = this.getEffects(digimonZone.cards.length)
+        const effects = this.getEffects(digimonZone.cartas.length)
 
-        if (this.targetScope == "UNIQUE"){
+        if (this.targetScope === "UNIQUE"){
             const cardDigimonId = cardDigimonIds[0]
             const effect = effects[0]
             digimonZone.applyEquipmentEffectTo(cardDigimonId, effect)
         }
 
-        if (this.targetScope == "ALL") {
-            for (var i = 0; i < digimonZone.cards.length; i++) {
-                const cardDigimonId = digimonZone.cards[i].uniqueIdInGame
+        if (this.targetScope === "ALL") {
+            for (var i = 0; i < digimonZone.cartas.length; i++) {
+                const cardDigimonId = digimonZone.cartas[i].uniqueIdInGame
                 const effect = effects[i]
                 digimonZone.applyEquipmentEffectTo(cardDigimonId, effect);
             }
@@ -62,7 +62,7 @@
   }
 
 
-module.exports = {
+export {
   EquipmentCard,
   EquipmentEffect
 }

@@ -12,4 +12,4 @@ const EstadosDeLaPartida = {
     FINISHED_GAME: 'FINISHED_GAME',
 }
 
-module.exports = EstadosDeLaPartida
+export default EstadosDeLaPartida

@@ -1,5 +1,5 @@
-const Game = require("./Game")
-const Mazo = require("./Deck")
+import Game from "./Game.js"
+import Mazo from "./Deck.js"
 
 class GameData{
     constructor(){
@@ -49,4 +49,4 @@ class GameData{
     }
 }
 
-module.exports = GameData
+export default GameData

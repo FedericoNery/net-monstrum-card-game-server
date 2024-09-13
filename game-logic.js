@@ -1,13 +1,14 @@
-const { createNewGame } = require("./events/1_createNewGame")
-const { playerJoinsGame } = require("./events/2_playerJoinsGame")
-const { finishLoadPhase } = require("./events/5_finishLoadPhase")
-const { finishSummonPhase } = require("./events/6_finishSummonPhase")
-const {finishUpgradePhase} = require("./events/finishUpgradePhase")
-const { activateEnergyCard } = require("./events/activateEnergyCard")
-const { obtenerRooms } = require("./events/obtenerRooms")
-const { onDisconnect } = require("./events/onDisconnect")
-const PLAYER_ACTIONS = require("./models/PlayerActions")
-const { SUBSCRIPTIONS_EVENTS } = require("./utils/events")
+import { createNewGame } from './events/1_createNewGame.js';
+import { playerJoinsGame } from './events/2_playerJoinsGame.js';
+import { finishLoadPhase } from './events/5_finishLoadPhase.js';
+import { finishSummonPhase } from './events/6_finishSummonPhase.js';
+import { finishUpgradePhase } from './events/finishUpgradePhase.js';
+import { activateEnergyCard } from './events/activateEnergyCard.js';
+import { obtenerRooms } from './events/obtenerRooms.js';
+import { onDisconnect } from './events/onDisconnect.js';
+import PLAYER_ACTIONS from './models/PlayerActions.js';
+import { SUBSCRIPTIONS_EVENTS } from './utils/events.js';
+import {activateEquipmentCard } from "./events/activateEquipmentCard.js";
 
 // gamesInSession stores an array of all active socket connections
 var gamesInSession = []
@@ -46,6 +47,6 @@ const initializeGame = (sio, socket) => {
     gameSocket.on(SUBSCRIPTIONS_EVENTS.ACTIVATE_EQUIPMENT_CARD, (params) => activateEquipmentCard(params, gamesData, io))
 }
 
-module.exports = {
+export {
     initializeGame,
 }

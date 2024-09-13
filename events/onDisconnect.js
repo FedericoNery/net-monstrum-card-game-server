@@ -3,4 +3,4 @@ function onDisconnect(gamesInSession, gameSocket) {
     gamesInSession.splice(i, 1);
 }
 
-module.exports = { onDisconnect }
+export { onDisconnect }
