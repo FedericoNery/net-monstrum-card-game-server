@@ -3,6 +3,9 @@ import {createServer} from 'http'
 import { Server } from 'socket.io'
 import { instrument } from "@socket.io/admin-ui"
 import { initializeGame } from './game-logic.js'
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express()
 const httpServer = createServer(app)

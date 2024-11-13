@@ -5,7 +5,6 @@ import DigimonZone  from './DigimonZone.js'
 import { obtenerEnergias, obtenerEnergiasYSumarlas } from '../services/manoService.js'
 import {COLOR} from '../utils/enums.js'
 
-
 class Field {
   constructor(deckCards = [], handCards = [], zonaJuego = [], trashCards = []) {
     this.attackPoints = 0;
@@ -15,6 +14,7 @@ class Field {
     this.deck = new Deck(deckCards);
     this.trash = new Trash(trashCards);
     this.cantidadesEnergias = null
+    this.isEnabledSummonDigimonWithOneEnergy = process.env.ENABLE_SUMMON_DIGIMON_WITH_ONE_ENERGY === 'true'
   }
 
   discardDigimonZoneAndHandCards(){
@@ -110,7 +110,7 @@ class Field {
 
   quitarEnergiasGastadasPor(card) {
     const color = card.color
-    const energiasARestar = card.energyCount
+    const energiasARestar = this.isEnabledSummonDigimonWithOneEnergy ? 1 : card.energyCount
     switch (color) {
       case COLOR.RED:
         this.cantidadesEnergias.red -= energiasARestar
