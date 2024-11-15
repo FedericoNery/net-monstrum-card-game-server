@@ -135,38 +135,39 @@ class Field {
     }
   }
 
+  //SI SE DESCUENTAN 2 ENERGIAS SUPONGAMOS, HAY QUE CAMBIAR LA IMPLEMENTACIÓN para que quede en cero
   quitarEnergiasPor(card) {
     const color = card.color
     const energiasARestar = card.energyCount
     switch (color) {
       case COLOR.RED:
         if(this.cantidadesEnergias.red > 0){
-          this.cantidadesEnergias.red -= energiasARestar
+          this.cantidadesEnergias.red += energiasARestar //SE AGREGA += porque las energy tienen valores negativos
         }
         break;
       case COLOR.BLACK:
         if(this.cantidadesEnergias.black > 0){
-          this.cantidadesEnergias.black -= energiasARestar
+          this.cantidadesEnergias.black += energiasARestar
         }
         break;
       case COLOR.BLUE:
         if(this.cantidadesEnergias.blue > 0){
-          this.cantidadesEnergias.blue -= energiasARestar
+          this.cantidadesEnergias.blue += energiasARestar
         }
         break;
       case COLOR.BROWN:
         if(this.cantidadesEnergias.brown > 0){
-          this.cantidadesEnergias.brown -= energiasARestar
+          this.cantidadesEnergias.brown += energiasARestar
         }
         break;
       case COLOR.GREEN:
         if(this.cantidadesEnergias.green > 0){
-          this.cantidadesEnergias.green -= energiasARestar
+          this.cantidadesEnergias.green += energiasARestar
         }
         break;
       case COLOR.WHITE:
         if(this.cantidadesEnergias.white > 0){
-          this.cantidadesEnergias.white -= energiasARestar
+          this.cantidadesEnergias.white += energiasARestar
         }
         break;
       default:
