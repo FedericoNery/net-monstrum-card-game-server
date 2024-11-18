@@ -1,7 +1,7 @@
 import { EMIT_EVENTS } from "../utils/events.js"
 import {startDrawPhase} from "./3_startDrawPhase.js"
 
-function playerJoinsGame({gameIdToJoin, user, deck, socketId}, io, gamesData, gameSocket) {
+function playerJoinsGame({gameIdToJoin, user, deck, socketId}, io, gamesData, gameSocket, roomsWithOnePlayer) {
     /**
      * Joins the given socket to a session with it's gameId
      */
@@ -39,6 +39,7 @@ function playerJoinsGame({gameIdToJoin, user, deck, socketId}, io, gamesData, ga
         gameSocket.emit('status', "There are already 2 people playing in this room.");
     }
     if (room.size === 2) {
+        roomsWithOnePlayer.splice(roomsWithOnePlayer.indexOf(gameIdToJoin), 1);
         //Emitir al cliente para que seleccione a Calumon o al otro Digimon
 
         //Crear Juego y guardarlo en el array de juegos

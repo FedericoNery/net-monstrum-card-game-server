@@ -39,6 +39,9 @@ async function finishUpgradePhase({socketId, usuarioId, cardDigimonsToSummonIds}
                             console.log("ENTRO A FINISHED GAME")
                             io.to(socketIdUsuarioA).emit(EMIT_EVENTS.FINISHED_GAME, JSON.stringify({gameData: gamesData[indexGame]}))
                             io.to(socketIdUsuarioB).emit(EMIT_EVENTS.FINISHED_GAME, JSON.stringify({gameData: gamesData[indexGame]}))
+
+                            gamesData.splice(indexGame, 1);
+                            //TODO :: HACER LO MISMO PARA LOS GAMES IDS USING
                         }
                         else{
                             finishRound(indexGame, gamesData, io)
