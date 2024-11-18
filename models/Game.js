@@ -285,7 +285,7 @@ class Game {
             this.field1.agregarEnergiaPor(energyCard);
         }
         this.field1.hand.cartas = this.field1.hand.cartas.filter(x => x.uniqueIdInGame !== cardId)
-        
+        this.field1.trash.agregarCarta(energyCard);
     }
 
     activateEnergyCardJugador2(cardId){
@@ -300,6 +300,7 @@ class Game {
             this.field2.agregarEnergiaPor(energyCard);
         }
         this.field2.hand.cartas = this.field2.hand.cartas.filter(x => x.uniqueIdInGame !== cardId)
+        this.field2.trash.agregarCarta(energyCard)
     }
 
     activateEquipmentCardJugador1(cardDigimonId, cardEquipmentId){

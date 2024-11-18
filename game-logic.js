@@ -33,7 +33,7 @@ const initializeGame = (sio, socket) => {
     gameSocket.on(SUBSCRIPTIONS_EVENTS.CREATE_NEW_GAME, (params) => createNewGame(params, gamesData, gamesIdsUsing, roomsWithOnePlayer, gameSocket))
 
     // User joins gameRoom after going to a URL with '/game/:gameId' 
-    gameSocket.on(SUBSCRIPTIONS_EVENTS.PLAYER_JOIN_GAME, (params) => playerJoinsGame(params, io, gamesData, gameSocket))
+    gameSocket.on(SUBSCRIPTIONS_EVENTS.PLAYER_JOIN_GAME, (params) => playerJoinsGame(params, io, gamesData, gameSocket, roomsWithOnePlayer))
 
     gameSocket.on(SUBSCRIPTIONS_EVENTS.GET_ROOMS, () => obtenerRooms(roomsWithOnePlayer, gameSocket))
 
