@@ -46,9 +46,9 @@ async function finishUpgradePhase({socketId, usuarioId, cardDigimonsToSummonIds}
                         else{
                             finishRound(indexGame, gamesData, io)
                         }
-                    }, 5000)
+                    }, 8000)
 
-                }, 5000)
+                }, 6000)
 
             }, 6000)
             
