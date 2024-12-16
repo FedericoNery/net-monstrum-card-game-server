@@ -346,6 +346,10 @@ class Game {
         if(socketId === socketIdUsuarioB){
             this.player2FinishedUpgradePhase = true
         }
+
+        if(this.player1FinishedUpgradePhase && this.player2FinishedUpgradePhase){
+            this.estadoDeLaRonda = EstadosDeLaPartida.BATTLE_PHASE
+        }
     }
 
     isFinishedUpgradePhase(){

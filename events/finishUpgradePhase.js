@@ -46,13 +46,13 @@ async function finishUpgradePhase({socketId, usuarioId, cardDigimonsToSummonIds}
                         else{
                             finishRound(indexGame, gamesData, io)
                         }
-                    }, 1000)
+                    }, 5000)
 
-                }, 1000)
+                }, 5000)
 
-            }, 1000)
+            }, 6000)
             
-        }, 1000); 
+        }, 6000); 
     }
     else{
         io.to(socketIdUsuarioA).emit("UPDATE GAME DATA", JSON.stringify({gameData: gamesData[indexGame]}));
