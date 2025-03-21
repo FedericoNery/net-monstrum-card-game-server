@@ -1,4 +1,4 @@
-import Field from "./Field.js"
+import Field from "./field/Field.js"
 import EstadosDeLaPartida  from './EstadosPartida.js'
 import {EquipmentCard} from './EquipmentEffect.js'
 //gameId sería el identificador de la sesión
@@ -43,8 +43,8 @@ class Game {
     }
 
     shuffleDecks(){
-        this.field1.deck.mezclar()
-        this.field2.deck.mezclar()
+        this.field1.deck.shuffle()
+        this.field2.deck.shuffle()
     }
 
     iniciarRonda(){

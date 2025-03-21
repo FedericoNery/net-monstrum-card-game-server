@@ -2,8 +2,8 @@ import Hand  from './Hand.js'
 import Trash  from './Trash.js' 
 import Deck  from './Deck.js'
 import DigimonZone  from './DigimonZone.js'
-import { obtenerEnergias, obtenerEnergiasYSumarlas } from '../services/manoService.js'
-import {COLOR} from '../utils/enums.js'
+import { obtenerEnergias, obtenerEnergiasYSumarlas } from '../../services/manoService.js'
+import {COLOR} from '../../utils/enums.js'
 
 class Field {
   constructor(deckCards = [], handCards = [], zonaJuego = [], trashCards = []) {
@@ -46,7 +46,7 @@ class Field {
   }
 
   repartirCartas(cantidad) {
-    const cartasExtraidas = this.deck.extraerCartas(cantidad)
+    const cartasExtraidas = this.deck.extractCardsByQuantity(cantidad)
     this.hand.setCartas(cartasExtraidas)
   }
 
