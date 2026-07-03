@@ -50,6 +50,17 @@ export class RoomsManager {
         }
     }
 
+    getAvailableRooms() {
+        return this.waitingRooms.map(roomId => {
+            const roomData = this.getRoom(roomId);
+            return {
+                gameId: roomData.gameId,
+                player1UserId: roomData.player1UserId,
+                player1DeckId: roomData.player1DeckId
+            }
+        });
+    }
+
     _getNewGameId() {
         let x = null;
         while (this.gamesIdsUsing.length === 0 || !this.gamesIdsUsing.includes(x)) {

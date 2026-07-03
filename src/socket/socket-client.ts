@@ -16,7 +16,9 @@ export class SocketClient {
 
     attachListeners() {
         this.client.addListener(SUBSCRIPTIONS_EVENTS.CREATE_NEW_GAME, this.createGame.bind(this));
-        this.client.addListener(SUBSCRIPTIONS_EVENTS.PLAYER_JOIN_GAME, this.createGame.bind(this));
+        this.client.addListener(SUBSCRIPTIONS_EVENTS.PLAYER_JOIN_GAME, this.joinGame.bind(this));
+        this.client.addListener(SUBSCRIPTIONS_EVENTS.GET_AVAILABLE_ROOMS, this.getAvailableRooms.bind(this));
+        this.client.addListener(SUBSCRIPTIONS_EVENTS.QUEUE_PROGRAMMING_CARD, this.queueProgrammingCard.bind(this));
     }
 
     createGame({userId, deckId}) {
@@ -55,7 +57,13 @@ export class SocketClient {
         }
     }
 
-    getAvailableRooms(){}
+    getAvailableRooms(){
+        return this.roomManager.getAvailableRooms()
+    }
+
+    queueProgrammingCards(){
+        
+    }
 
 
     

@@ -1,4 +1,4 @@
-import { TYPE } from "../utils/enums.js";
+import { TYPE } from "../../utils/enums.js";
 
 interface Card {
   uniqueIdInGame: string;
